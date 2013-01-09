@@ -13,7 +13,7 @@ for i=1:Test_Num,
     enc_data(:,i) = step(hEnc,data(:,i)); % Encode First Column of Data
 end;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Error Generation  %%%%%%%%%%%%%%%%%%%%
-error_count = randi([0 t],Test_Num);
+error_count = randi([0 t],[1 Test_Num]);
 error_location = randi([1 n],[t  Test_Num]);
 error_value = randi([1 n],[t Test_Num]);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Data Export  %%%%%%%%%%%%%%%%%%%%%%%%%
@@ -21,9 +21,9 @@ directory = sprintf('./Data_m_%d_t_%d',m,t);
 if ~exist(directory, 'dir')
   mkdir(directory);
 end
-dlmwrite(sprintf('./%s/Encoded_Data.txt',directory),enc_data,'-append');
-dlmwrite(sprintf('./%s/Error_Count.txt',directory), error_count,'-append');
-dlmwrite(sprintf('./%s/Error_Location.txt',directory), error_location,'-append');
-dlmwrite(sprintf('./%s/Error_Value.txt',directory), error_value,'-append');
+dlmwrite(sprintf('%s/Encoded_Data.txt',directory),enc_data);
+dlmwrite(sprintf('%s/Error_Count.txt',directory), error_count);
+dlmwrite(sprintf('%s/Error_Location.txt',directory), error_location);
+dlmwrite(sprintf('%s/Error_Value.txt',directory), error_value);
 end
 
