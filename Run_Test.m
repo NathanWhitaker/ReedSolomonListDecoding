@@ -23,6 +23,8 @@ for Test_Num=1:Test_count,
     for i=1:error_count(Test_Num),
         corrupted_data(actual_error_location(i,Test_Num),Test_Num) = error_value(i,Test_Num);
     end;
+end;
+parfor Test_Num=1:Test_count,
     corrupted_data_gf = gf(corrupted_data(:,Test_Num),m);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Algorithm Calls   %%%%%%%%%%%%%%%%%%%%
     fprintf('\r\rTest : %d \r',Test_Num);

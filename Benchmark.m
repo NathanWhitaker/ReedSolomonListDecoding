@@ -9,11 +9,13 @@ tic
 tBench = tic;
 syndrome = gf(zeros(1, 2*t),m);
 alpha_power = gf(0,m);
+alpha_mult = gf(0,m);
 for i=1:2*t,
     alpha_power = alpha^(i*n);
+    alpha_mult = alpha^-i;
     for j=1:n,
-        alpha_power = alpha_power * alpha^-i;
-        syndrome(i)=syndrome(i) + corrupted_data_gf(j) * alpha_power;
+        alpha_power = alpha_power * alpha_mult;
+        syndrome(i) = syndrome(i) + corrupted_data_gf(j) * alpha_power;
     end;
 end;
 fprintf('Benchmark Syndrome Calculation : %d s\r',toc);
@@ -74,22 +76,18 @@ for j=1:2*t,
     gamma(j) = lambda(j)*(alpha^(j-1));
 end;
 error_count = 0;
-error_location = 0;
 eval_store = gf(zeros(1,n),m);
 for i=1:n,
     eval_store(i) = 0;
     
     for j=1:2*t, % Accumulate Values
         eval_store(i) = eval_store(i) + gamma(j);
+        gamma(j) = gamma(j) * (alpha^(j-1));
     end;
 
     if (eval_store(i) == 0) % Check for Root
         error_count = error_count + 1;
         error_location(error_count) = i; %alpha^-1
-    end;
-    
-    for j=1:2*t, % New value to be evaluated
-        gamma(j) = gamma(j) * (alpha^(j-1));
     end;
 end;
 fprintf('Benchmark Chien Search : %d s\r',toc);
