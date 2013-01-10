@@ -10,10 +10,10 @@ tBench = tic;
 syndrome = gf(zeros(1, 2*t),m);
 alpha_power = gf(0,m);
 alpha_mult = gf(0,m);
-for i=1:2*t,
+parfor i=1:2*t,
     alpha_power = alpha^(i*n);
     alpha_mult = alpha^-i;
-    for j=1:n,
+    for j=1:n,  
         alpha_power = alpha_power * alpha_mult;
         syndrome(i) = syndrome(i) + corrupted_data_gf(j) * alpha_power;
     end;
@@ -72,6 +72,7 @@ end;
 % http://vincent.herbert.is.free.fr/documents/biswas-herbert-slides-weworc09.pdf
 tic
 gamma = gf(zeros(1,2*t),m);
+alpha_power = gf(1,m);
 for j=1:2*t, 
     gamma(j) = lambda(j)*(alpha^(j-1));
 end;
@@ -82,7 +83,8 @@ for i=1:n,
     
     for j=1:2*t, % Accumulate Values
         eval_store(i) = eval_store(i) + gamma(j);
-        gamma(j) = gamma(j) * (alpha^(j-1));
+        gamma(j) = gamma(j) * alpha_power;
+        alpha_power = alpha_power * alpha;
     end;
 
     if (eval_store(i) == 0) % Check for Root
