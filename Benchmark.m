@@ -18,7 +18,7 @@ for i=1:2*t,
         syndrome(i) = syndrome(i) + corrupted_data_gf(j) * alpha_power;
     end;
 end;
-fprintf('Benchmark Syndrome Calculation : %d s\r',toc);
+%fprintf('Benchmark Syndrome Calculation : %d s\r',toc);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Syndrome Check   %%%%%%%%%%%%%%%%%%%%%
 if (syndrome == gf(zeros(1,2*t),m))
     fprintf( 'No Correction Required\r')
@@ -50,7 +50,7 @@ for K=1:(2*t),
     correction = circshift(correction,[0 1]);
 end;
 lambda = lambda_new;
-fprintf('Benchmark Berlekamp Massey : %d s\r',toc);
+%fprintf('Benchmark Berlekamp Massey : %d s\r',toc);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Key Equation Calc %%%%%%%%%%%%%%%%%%%%
 %% Algorithm implemented from BBC White Paper 031
 %% Omega_1 = Synd_1
@@ -65,7 +65,7 @@ for i=1:(2*t),
         omega(i) = omega(i) + lambda(j)*syndrome(i-j+1);
     end;
 end;
-fprintf('Benchmark Omega : %d s\r',toc);
+%fprintf('Benchmark Omega : %d s\r',toc);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Chien Search Calc %%%%%%%%%%%%%%%%%%%%
 %   f(?^i)     = a0 + a1*?^i+ ... + at*(?^i)^t
 %   f(?^[i+1]) = a0 + a1*?^[i+1]+ ... + at*(?^[i+1])^t
@@ -90,7 +90,7 @@ for i=1:n,
         error_location(error_count) = i; %alpha^-1
     end;
 end;
-fprintf('Benchmark Chien Search : %d s\r',toc);
+%fprintf('Benchmark Chien Search : %d s\r',toc);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Forney Algorithm %%%%%%%%%%%%%%%%%%%%%
 tic
 lambda_diff      = gf(zeros(1,t),m);
@@ -116,9 +116,9 @@ for i=1:error_count,
 end;
 corrected_data = double(decoded_data.x);
 
-fprintf('Benchmark Forney : %d s\r',toc);   
-fprintf('Benchmark Time : %d s\r\r',toc(tBench));  
-fprintf('Benchmark Error Locations : %g \r',error_location);
-fprintf('\r');
+%fprintf('Benchmark Forney : %d s\r',toc);   
+fprintf('Benchmark Time : %d s\r',toc(tBench));  
+%fprintf('Benchmark Error Locations : %g \r',error_location);
+%fprintf('\r');
 end
 

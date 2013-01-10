@@ -27,11 +27,17 @@ end;
 parfor Test_Num=1:Test_count,
     corrupted_data_gf = gf(corrupted_data(:,Test_Num),m);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Algorithm Calls   %%%%%%%%%%%%%%%%%%%%
-    fprintf('\r\rTest : %d \r',Test_Num);
+    fprintf('\rTest : %d \r',Test_Num);
     bench_data(:,Test_Num) = double(Benchmark(corrupted_data_gf,p,m,t,n,k));
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Data Charactistics  %%%%%%%%%%%%%%%%%% 
     Bench_Result(Test_Num) = sum(abs(enc_data(:,Test_Num) - bench_data(:,Test_Num))'); % Non-zero difference in decoding
+    if (Bench_Result(Test_Num) ~= 0),
+        fprintf('Test %d FAILED \r',Test_Num);
+    else
+        fprintf('Test %d SUCCESSFUL \r',Test_Num);
+    end;
 end;
+
 for Test_Num=1:Test_count,
     if (Bench_Result(Test_Num) ~= 0),
         fprintf('Test %d failed \r',Test_Num);
