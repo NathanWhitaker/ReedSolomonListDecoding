@@ -1,4 +1,4 @@
-function [ corrected_data ] = Benchmark( corrupted_data_gf,p,m,t,n,k)
+function [ corrected_data ] = Benchmark(corrupted_data_gf,p,m,t,n,k)
 %BENCHMARK Summary of this function goes here
 %   Detailed explanation goes here
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  System Parameters  %%%%%%%%%%%%%%%%%%%%
