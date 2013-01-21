@@ -3,12 +3,11 @@ function [ Factor_List ] = Factor_gf_poly( Polynomial )
 %   Detailed explanation goes here
 poly = double(Polynomial.x);
 k = size(poly,1);
-Factor_List = zeros(1,k);
+Factor_List = zeros(k,k);
 Factor_Count = 0;
-%if (poly(:,2:size(poly,2)) == 0), %% only dependent on x
 i = 1;
 divider = 0;
-dividend = double(poly(:,1)');
+dividend = double(poly');
 while(i <= bi2de(dividend)),
     i = i + 1; 
     divider = de2bi(i);
@@ -24,7 +23,6 @@ while(i <= bi2de(dividend)),
         i = 1;
     end;
 end;
-%end;
 Factor_List = Factor_List';
 end
 
