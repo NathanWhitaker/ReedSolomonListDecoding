@@ -1,4 +1,4 @@
-function [Bench_Result] = Run_Test( m,t )
+function [list] = Run_Test( m,t )
 %function [ bench_data,Bench_Result,enc_data, actual_error_location] = Run_Test( m,t )
 %RUN_TEST Summary of this function goes here
 %   Detailed explanation goes here
@@ -6,7 +6,7 @@ function [Bench_Result] = Run_Test( m,t )
 p = 2;   % Base Prime
 n = (p^m)-1; % Codeblock Size
 k = n - (2*t); % Message Width
-matlabpool('open','AttachedFiles','Run_Test.m')
+%matlabpool('open','AttachedFiles','Run_Test.m')
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Test Data Retrieval %%%%%%%%%%%%%%%%%%
 directory = sprintf('./Data_m_%d_t_%d',m,t);
 enc_data = dlmread(sprintf('%s/Encoded_Data.txt',directory));
@@ -49,7 +49,7 @@ end;
 fprintf('Number of Failed Tests : %d\r',failure_count);
 fprintf('Number of Passed Tests : %d\r',(Test_count-failure_count));
 fprintf('Total Time : %d s\r',toc(tStart));
-matlabpool close
+%matlabpool close
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
