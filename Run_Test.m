@@ -30,7 +30,7 @@ for Test_Num=1:1,
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Algorithm Calls   %%%%%%%%%%%%%%%%%%%%
     fprintf('\rTest : %d \r',Test_Num);
     bench_data(:,Test_Num) = double(Benchmark(corrupted_data_gf,p,m,t,n,k));
-    %list = Sudan(corrupted_data_gf,m,n,k);
+    list = Sudan(corrupted_data_gf,m,n,k);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Data Charactistics  %%%%%%%%%%%%%%%%%% 
     Bench_Result(Test_Num) = sum(abs(enc_data(:,Test_Num) - bench_data(:,Test_Num))'); % Non-zero difference in decoding
     if (Bench_Result(Test_Num) ~= 0),
