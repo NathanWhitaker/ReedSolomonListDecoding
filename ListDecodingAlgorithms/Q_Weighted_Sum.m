@@ -3,8 +3,8 @@ function [ Q_Sum ] = Q_Weighted_Sum(X,Y,c_kj,m,l,d)
 %   Detailed explanation goes here
 k_limit = m+l*d;
 Q = gf(zeros(l+1,k_limit+1),m);
-x_mat = X .^ [0:k_limit];
-y_mat = Y .^ [0:l];
+x_mat = X .^ (0:k_limit);
+y_mat = Y .^ (0:l);
 vert_ones = gf(ones(1,k_limit+1),m);
 horz_ones = gf(ones(l+1,1),m);
 for j=0:l,
