@@ -6,6 +6,7 @@ function [bench_data] = Run_Test( m,t )
 p = 2;   % Base Prime
 n = (p^m)-1; % Codeblock Size
 k = n - (2*t); % Message Width
+AddPath;
 %matlabpool('open','AttachedFiles','Run_Test.m')
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Test Data Retrieval %%%%%%%%%%%%%%%%%%
 directory = sprintf('./Data_m_%d_t_%d',m,t);

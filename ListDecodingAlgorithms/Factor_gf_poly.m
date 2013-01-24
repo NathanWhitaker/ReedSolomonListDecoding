@@ -12,17 +12,16 @@ while(i <= bi2de(dividend)),
     i = i + 1; 
     divider = de2bi(i);
     [quot, remd] = gfdeconv(dividend,divider,2);
-    if (remd == 0),
+    if (bi2de(remd) == 0), %% in factor found, including last factor
         padamount = k - size(divider,2);
         divider = padarray(divider,[0 padamount],'post'); %% pad to correct width
         if ~(ismember(divider,Factor_List,'rows')),
             Factor_Count = Factor_Count + 1;
-            Factor_List(Factor_Count,:) = divider;
+            Factor_List(:,Factor_Count) = divider';
         end;
         dividend = quot;
         i = 1;
     end;
 end;
-Factor_List = Factor_List';
 end
 
