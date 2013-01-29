@@ -1,1 +1,1 @@
-addpath('.\ListDecodingAlgorithms','.\SudanAlgorithm');
+addpath('.\ListDecodingAlgorithms','.\SudanAlgorithm','.\ExternalFunctions');
