@@ -30,25 +30,29 @@ for Test_Num=1:1,
     corrupted_data_gf = gf(corrupted_data(:,Test_Num),m);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Algorithm Calls   %%%%%%%%%%%%%%%%%%%%
     fprintf('\rTest : %d \r',Test_Num);
-    bench_data(:,Test_Num) = double(Benchmark(corrupted_data_gf,m,t,n));
-    list = Sudan(corrupted_data_gf,m,k,choice);
+    Bench_Data(:,Test_Num) = double(Benchmark(corrupted_data_gf,m,t,n));
+    List_Sudan             = Sudan(corrupted_data_gf,m,k,choice);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Data Charactistics  %%%%%%%%%%%%%%%%%% 
     Bench_Result(Test_Num) = sum(abs(enc_data(:,Test_Num) - bench_data(:,Test_Num))'); % Non-zero difference in decoding
-    if (Bench_Result(Test_Num) ~= 0),
-        fprintf('Test %d FAILED \r',Test_Num);
-    else
-        fprintf('Test %d SUCCESSFUL \r',Test_Num);
-    end;
+%     if (Bench_Result(Test_Num) ~= 0),
+%         fprintf('Test %d FAILED \r',Test_Num);
+%     else
+%         fprintf('Test %d SUCCESSFUL \r',Test_Num);
+%     end;
 end;
-failure_count = 0
-for Test_Num=1:Test_count,
-    if (Bench_Result(Test_Num) ~= 0),
-        fprintf('Test %d failed \r',Test_Num);
-        failure_count = failure_count + 1;
-    end;
-end;
-fprintf('Number of Failed Tests : %d\r',failure_count);
-fprintf('Number of Passed Tests : %d\r',(Test_count-failure_count));
+fprintf('Benchmark Result : ');
+Bench_Data
+fprintf('Sudan Result : ');
+List_Sudan
+% failure_count = 0
+% for Test_Num=1:Test_count,
+%     if (Bench_Result(Test_Num) ~= 0),
+%         fprintf('Test %d failed \r',Test_Num);
+%         failure_count = failure_count + 1;
+%     end;
+% end;
+% fprintf('Number of Failed Tests : %d\r',failure_count);
+% fprintf('Number of Passed Tests : %d\r',(Test_count-failure_count));
 fprintf('Total Time : %d s\r',toc(tStart));
 %matlabpool close
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

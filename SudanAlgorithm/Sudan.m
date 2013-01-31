@@ -44,7 +44,7 @@ end;
 %Remove initialisation value
 List = List(:,2:size(List,2));
 %Remove duplicate results
-List = gf(unique(List.x','rows')',m); 
+List = unique(List.x','rows')';
 fprintf('List Size is : %d\r',List_count); 
-fprintf('Total Time : %d s\r',toc(tStart));
+fprintf('Total Time : %d s\r\r',toc(tStart));
 end
