@@ -1,7 +1,6 @@
 function [ factor_vect ] = Str_to_Fact( factor_str,m,x_limit,y_limit )
 %STR_TO_FACT Summary of this function goes here
-%   This is passed the string of a factor and this converts it into a
-%   coefficient matrix in X and Y
+%   This is passed the string recieved from 
 
 factor_vect = gf(zeros((x_limit+1)*(y_limit+1),1),m);
 factor_str = strrep(factor_str,'-','+');

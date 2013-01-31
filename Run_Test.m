@@ -1,4 +1,4 @@
-function [bench_data] = Run_Test( m,t )
+function [bench_data] = Run_Test(m,t,choice)
 %function [ bench_data,Bench_Result,enc_data, actual_error_location] = Run_Test( m,t )
 %RUN_TEST Summary of this function goes here
 %   Detailed explanation goes here
@@ -30,8 +30,8 @@ for Test_Num=1:1,
     corrupted_data_gf = gf(corrupted_data(:,Test_Num),m);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Algorithm Calls   %%%%%%%%%%%%%%%%%%%%
     fprintf('\rTest : %d \r',Test_Num);
-    %bench_data(:,Test_Num) = double(Benchmark(corrupted_data_gf,p,m,t,n,k));
-    list = Sudan(corrupted_data_gf,m,n,k);
+    bench_data(:,Test_Num) = double(Benchmark(corrupted_data_gf,m,t,n));
+    list = Sudan(corrupted_data_gf,m,k,choice);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Data Charactistics  %%%%%%%%%%%%%%%%%% 
     Bench_Result(Test_Num) = sum(abs(enc_data(:,Test_Num) - bench_data(:,Test_Num))'); % Non-zero difference in decoding
     if (Bench_Result(Test_Num) ~= 0),

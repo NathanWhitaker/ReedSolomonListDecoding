@@ -1,28 +1,29 @@
-function [valid,msg] = Eval_Factor( X,Y,factor,p,m,t )
+function [valid,msg] = Eval_Factor(X,Y,factor,m,t,x_limit,y_limit)
 %EL Summary of this function goes here
-%   Detailed explanation goes here
-n = p^m-1;
-n_root = floor(sqrt(n));
+%   This evaluates whether the factor that has been passed as a parameter 
+%   by generating the associated message and comparing this to the actual 
+%   recieved message and if these match for more than t places then it is
+%   used
+n = 2^m-1;
 
-x_mat = gf(zeros(n,n_root+1),m);
-factor_mat = gf(zeros(1,n_root+1),m);
-msg = gf(zeros(n,1),m);
-count = 0;
+x_mat = gf(zeros(n,x_limit+1),m);
+y_mat = gf(zeros(n,y_limit+1),m);
+factor_mat = gf(zeros(x_limit+1,y_limit+1),m);
 
-for i=1:n_root+1,
-    factor_mat = factor(1:n_root+1);
-end;
-for i=1:n,
-    x_mat(i,:) = gf(X(i),m) .^ (0:n_root);
+for i=1:y_limit+1,
+    factor_mat(:,i) = factor((i-1)*(x_limit+1)+1:i*(x_limit+1));
 end;
 
 for i=1:n,
-    msg(i) = x_mat(i,:) * factor_mat;
-    if (msg(i) == Y(i)),
-        count = count + 1;
-    end;
+    x_mat(i,:) = gf(X(i),m) .^ (0:x_limit);
+    y_mat(i,:) = gf(Y(i),m) .^ (0:y_limit);
 end;
-if (count > (n-t)),
+
+result = x_mat * factor_mat * y_mat';
+msg = result(1,:)';
+count = sum((msg - Y) == 0);
+
+if (count > (t)),
     valid = 1;
 else
     valid = 0;
