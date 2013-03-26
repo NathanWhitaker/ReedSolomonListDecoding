@@ -5,7 +5,7 @@ function [ List ] = Q_Function_sudan( X,Y,m,k,x_limit,y_limit)
 % Q(X,Y) = ?(j=0->l)?(k=0->(m+(l-j)d)[qkj*x^k*y^j]
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% System Parameters %%%%%%%%%%%%%%%%%%%%%%%%%%%
 n = 2^m-1;
-d = 2^m - k;
+d = k;
 limit = (y_limit+1)*(x_limit+1);
 x_mat = gf(zeros(n,x_limit+1),m);
 y_mat = gf(zeros(n,y_limit+1),m); 
@@ -15,7 +15,8 @@ Mat_Mask = gf(ones(n,limit),m);
 % Removes coefficients that are beyond the m+(l-j)*d limit seen in sudan
 % definition of Q(X,Y)
 for i=1:y_limit,
-     Mat_Mask(:,(x_limit+1)*2 - d*i + 1:(x_limit+1)*2) = 0;
+		bound = (x_limit+1)*(i+1);
+    Mat_Mask(:,(bound + 1 - d*i):bound) = 0;
 end;
 % Create matrices containing increasing powers of X and Y values
 for i=1:n,
@@ -28,8 +29,8 @@ end;
 for i=1:n,
     Sel = x_mat(i,1:x_limit+1);
     Line = Sel;
-    for j=1:y_limit,
-        Line = [Line Sel*y_mat(i,j+1)];
+    for j=1:y_limit, %%inital part for y^0 taken care of line above
+        Line = [Line Sel*y_mat(i,j)];
     end;
     Comp_mat(i,:) = Line;
 end;
@@ -37,5 +38,5 @@ Masked_Comp = Comp_mat.*Mat_Mask;
 % Masked_Comp is the matrix of stacked lines that has been masked, to find 
 % the polynomial that solves this the nullspace/kernel is found of the matrix
 % Nullspace x of matrix A are the solutions to Ax=0
-List = gfnull(Masked_Comp,'r');
+List = gfnull(Masked_Comp,'r',m);
 end

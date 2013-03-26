@@ -3,7 +3,7 @@
 % gf(2). This is helpful in quickly finding out if an encoder is
 % non-catastrophic
 
-function Z = gfnull(A,how)
+function Z = gfnull(A,how,m_in)
 %NULL   Null space.
 %   Z = NULL(A) is an orthonormal basis for the null space of A obtained
 %   from the singular value decomposition.  That is,  A*Z has negligible
@@ -50,13 +50,13 @@ if (nargin > 1) && isequal(how,'r')
 
    % Rational basis
 
-   [R,pivcol] = gfrref(A);
+   [R,pivcol] = gfrref(A,m_in);
    r = length(pivcol);
    nopiv = 1:n;
    nopiv(pivcol) = [];
-   Z = gf(zeros(n,n-r));
+   Z = gf(zeros(n,n-r),m_in);
    if n > r
-      Z(nopiv,:) = gf(eye(n-r,n-r));
+      Z(nopiv,:) = gf(eye(n-r,n-r),m_in);
       if r > 0
          Z(pivcol,:) = -R(1:r,nopiv);
       end

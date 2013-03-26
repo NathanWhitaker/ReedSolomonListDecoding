@@ -42,8 +42,8 @@ for Test_Num=1:1,
 end;
 fprintf('Benchmark Result : ');
 Bench_Data
-fprintf('Sudan Result : ');
-List_Sudan
+%fprintf('Sudan Result : ');
+%List_Sudan
 % failure_count = 0
 % for Test_Num=1:Test_count,
 %     if (Bench_Result(Test_Num) ~= 0),
@@ -53,7 +53,7 @@ List_Sudan
 % end;
 % fprintf('Number of Failed Tests : %d\r',failure_count);
 % fprintf('Number of Passed Tests : %d\r',(Test_count-failure_count));
-fprintf('Total Time : %d s\r',toc(tStart));
+fprintf('Total Time : %d s\r\n',toc(tStart));
 %matlabpool close
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
