@@ -27,17 +27,20 @@ corrupted_data = enc_data;
 %    end;
 %end;
 for Test_Num=1:Test_count,
-    fprintf('\rTest : %d \r',Test_Num);
-    corrupted_data_gf = gf(corrupted_data(:,Test_Num),m);
+	fprintf('\rTest : %d \r',Test_Num);
+  corrupted_data_gf = gf(corrupted_data(:,Test_Num),m);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Algorithm Calls   %%%%%%%%%%%%%%%%%%%%
-    Bench_Data = double(Benchmark(corrupted_data_gf,m,t,n));
-    List_Sudan = Sudan(corrupted_data_gf,m,k);
+  Bench_Data = double(corrupted_data_gf.x); %double(Benchmark(corrupted_data_gf,m,t,n));
+  List_Sudan = double(Sudan(corrupted_data_gf,m,k));
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Data Charactistics  %%%%%%%%%%%%%%%%%% 
-Buffer = zeros(size(Bench_Data,1),1);
-[Bench_Data Buffer List_Sudan Bench_Data-List_Sudan]
-end;
+	Buffer = zeros(size(Bench_Data,1),1);
+	if (size(List_Sudan,2) == 0),
+		fprintf('List Empty\r\n');
+	else
+		[Bench_Data Buffer List_Sudan Bench_Data-List_Sudan]
+		end;
 fprintf('Total Time : %d s\r\n',toc(tStart));
 %matlabpool close
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-end
-
+end     
+        
