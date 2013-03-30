@@ -32,9 +32,8 @@ msg = res;%result(1,:)';
 %Y
 count = sum((msg - Y) == 0);
 
-if (count > (t)),
+if (count > (2*t)),
     valid = 1;
-		factor_mat
 else
     valid = 0;
 end;

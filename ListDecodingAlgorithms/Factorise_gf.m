@@ -21,6 +21,7 @@ poly_str = full_str(1:size(full_str,2)-1); %% Remove trailing "+"
 factor_param = sprintf('poly(%s, [Y, X], IntMod(%d))',poly_str,2^m-1); %% Add additional strings that are required
 factor_sym = feval(symengine,'factor',factor_param);
 factor_str = char(factor_sym);
+
 start_fact = strfind(factor_str,'poly');
 clean_fact = 0;
 for i=1:size(start_fact,2),
@@ -43,4 +44,29 @@ factors = gf(zeros((x_limit+1)*(y_limit+1),factor_count),m);
 for i=1:factor_count,
     factors(:,i) = Str_to_Fact(factor_str(start_fact_clean(i)+5:end_fact(i)-1),m,x_limit,y_limit);
 end;
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% Identify Repeated Factors %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% find all polynomial powers up to 20 digits
+power_fact   = regexp(factor_str,'\^\d{0,20}', 'match');
+pow_fact_loc = regexp(factor_str,'\^\d{0,20}');
+%% remove the ^ symbols contatined
+power_fact   = str2double(regexprep(power_fact,'\^',''));
+
+for i=1:size(pow_fact_loc,1),
+	if(pow_fact_loc(i) > max(start_fact)),
+		%% power is for last factor
+		new_factor = factors(:,size(factors,2));
+		ori_factor = new_factor;
+	else
+		%% power for factor one less then minimum distance
+		[C,I] = min(abs(start_fact - pow_fact_loc(i)));
+		new_factor = factors(:,I(1) - 1);
+		ori_factor = new_factor;
+	end;
+		
+	for j=1:power_fact(i)-1,
+		new_factor = Factor_mult(new_factor,ori_factor,m);
+		factors = [factors new_factor];
+	end;
+
 end

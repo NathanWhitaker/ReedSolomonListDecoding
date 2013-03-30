@@ -119,7 +119,7 @@ end;
 corrected_data = double(decoded_data.x);
 
 %fprintf('Benchmark Forney : %d s\r',toc);   
-fprintf('Benchmark Time : %d s\r',toc(tBench));  
+fprintf('Benchmark Time : %d s\r\n',toc(tBench));  
 %fprintf('Benchmark Error Locations : %g \r',error_location);
 %fprintf('\r');
 end

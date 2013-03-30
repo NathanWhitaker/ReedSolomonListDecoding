@@ -12,13 +12,21 @@ x_limit     = m+l*d;
 y_limit     = l;
 
 List = gf(zeros(n,1),m);
-for j=1:n,
-  [valid msg] = Eval_Factor(X,Y,j*factors,m,t,x_limit,y_limit);
+locations = find(double(factors.x));
+count = size(locations,1);
+limit = n^count;
+factor_ex = gf(zeros(size(factors,1),1),m);
+for j=1:limit,
+	for i=1:count,
+		loc = locations(i);
+		factor_ex(loc) = gf(mod((j/(n^(i-1))),n),m);
+	end;
+	
+  [valid msg] = Eval_Factor(X,Y,factor_ex,m,t,x_limit,y_limit);
   if valid,   
       List = [List msg];
- 	end;
+	end;
 end;
-msg
 %Remove initialisation value
 List = List(:,2:size(List,2));
 %Remove duplicate results
