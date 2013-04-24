@@ -32,7 +32,7 @@ msg = res;%result(1,:)';
 %Y
 count = sum((msg - Y) == 0);
 
-if (count > (2*t)),
+if (count > (n-2*t)),
     valid = 1;
 else
     valid = 0;

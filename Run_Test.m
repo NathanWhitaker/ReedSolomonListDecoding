@@ -26,7 +26,9 @@ corrupted_data = enc_data;
 %        corrupted_data(actual_error_location(i,Test_Num),Test_Num) = error_value(i,Test_Num);
 %    end;
 %end;
+failed_list = gf(zeros(n,1),m);
 for Test_Num=1:Test_count,
+	tStart_i = tic;
 	fprintf('\rTest : %d \r',Test_Num);
   corrupted_data_gf = gf(corrupted_data(:,Test_Num),m);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Algorithm Calls   %%%%%%%%%%%%%%%%%%%%
@@ -36,10 +38,16 @@ for Test_Num=1:Test_count,
 	Buffer = zeros(size(Bench_Data,1),1);
 	if (size(List_Sudan,2) == 0),
 		fprintf('List Empty\r\n');
+		Bench_Data
+		failed_list = [failed_list Bench_Data];
 	else
-		[Bench_Data Buffer List_Sudan Bench_Data-List_Sudan]
-		end;
+		[Bench_Data Buffer List_Sudan List_Sudan-Bench_Data]
+	end;
+fprintf('Total Time : %d s\r\n',toc(tStart_i));
+end;
 fprintf('Total Time : %d s\r\n',toc(tStart));
+failed_list = failed_list(:,2:size(failed_list,2));
+dlmwrite(sprintf('failed.txt'),failed_list.x');
 %matlabpool close
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 end     
