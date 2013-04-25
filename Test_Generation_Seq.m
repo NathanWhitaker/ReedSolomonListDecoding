@@ -6,7 +6,7 @@ k = n - (2*t); % Message Width
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  System Sections  %%%%%%%%%%%%%%%%%%%%%
 Test_num = (2^m)^(power+1);
 X_vals = gf(ones(1,n),m);
-X_vals = [X_vals ;gf(2,m).^(1:n)];
+X_vals = [X_vals ;transpose(circshift(transpose(gf(2,m).^(1:n)),1))];
 val = 2^m;
 for i=1:power,
 	X_vals = [X_vals; X_vals(i+1,:).*X_vals(2,:)];	
