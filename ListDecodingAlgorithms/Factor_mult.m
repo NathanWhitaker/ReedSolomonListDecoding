@@ -8,11 +8,11 @@ function [ res_factor ] = Factor_mult(factor_1,factor_2,m)
 
 res_factor = gf(zeros(size(factor_1,1),size(factor_1,2)),m);
 
-for i=2:size(factor_2),
+for i=1:size(factor_2),
 	if(factor_2(i) ~= 0),
 		extra_factor = circshift(factor_1,i-1);
-		extra_factor(1:i) = 0;
-		res_factor = gf(res_factor.x | extra_factor.x,m);
+		extra_factor(1:i-1) = 0;
+		res_factor = res_factor.x + gf(extra_factor,m);
 	end;
 end;
 
