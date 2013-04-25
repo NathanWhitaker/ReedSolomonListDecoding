@@ -6,6 +6,7 @@ n = 2^m-1;
 t = floor((n-k)/2);
 d = k;%2^m -1 - 2*t;% k;
 l = ceil(sqrt(2*(n+1)/d)) - 1;
+x_lim = m+l*d;
 X = gf(2,m) .^ (0:n-1); %%X is the alpha list
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% Q(X,Y) Relationship between X and Y %%%%%%%%%
 tStart = tic;
@@ -20,17 +21,18 @@ polynomials = gf(unique(polynomials.x','rows')',m);
 %Polynomial that is found is then factorised
 factors = gf(zeros((x_limit+1)*(y_limit+1),1),m);
 for i=1:size(polynomials,2),
-		new_factors = Factorise_gf(polynomials(:,i),m,x_limit,y_limit);
+	new_factors = Factorise_gf(polynomials(:,i),m,x_limit,y_limit);
     factors = [factors new_factors];	
 end;
 %Remove initialisation value
 factors = factors(:,2:size(factors,2));
 %Remove duplicate factors
 factors = gf(unique(factors.x','rows')',m); 
+%Remove Y factor
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% Evaluate Polynomials %%%%%%%%%%%%%%%%%%%%%%%%
 List = gf(zeros(n,1),m);
 for i=1:size(factors,2),
-	List = [List Factor_Exhaust(Y,factors(:,i),m,k)];
+    List = [List Factor_Exhaust(Y,factors(:,i),m,k)];
 end;
 %Remove initialisation value
 List = List(:,2:size(List,2));
