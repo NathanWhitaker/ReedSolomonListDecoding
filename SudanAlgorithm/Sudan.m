@@ -1,4 +1,4 @@
-function [ List ] = Sudan(Y,m,k)
+function [ Min_Value ] = Sudan(Y,m,k)
 %SUDAN Summary of this function goes here
 %   Detailed explanation goes here
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% System Parameters %%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -47,4 +47,5 @@ List = List(:,2:size(List,2));
 List = unique(List.x','rows')';
 fprintf('Sudan Time : %d s\r\n',toc(tStart));
 fprintf('');
+Min_Value = Minimum_Distance(List,Y);
 end

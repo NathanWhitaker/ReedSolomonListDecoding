@@ -27,7 +27,7 @@ corrupted_data = enc_data;
 %    end;
 %end;
 failed_list = 0;
-parfor Test_Num=1:Test_count,
+for Test_Num=1:Test_count,
 	tStart_i = tic;
 	fprintf('\rTest : %d \r',Test_Num);
     corrupted_data_gf = gf(corrupted_data(:,Test_Num),m);
@@ -40,7 +40,11 @@ parfor Test_Num=1:Test_count,
 		fprintf('List Empty\r\n');
 		Bench_Data
 		failed_list = [failed_list Test_Num];
-	else
+    else
+        if(~isequal(List_Sudan,Bench_Data)),
+            failed_list = [failed_list Test_Num];
+            fprintf('Incorrect Result\r\n');
+        end;
 		[Bench_Data Buffer List_Sudan List_Sudan-Bench_Data]
 	end;
 fprintf('Total Time : %d s\r\n',toc(tStart_i));
