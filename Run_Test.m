@@ -1,4 +1,4 @@
-function [bench_data] = Run_Test(m,t)
+function [failed_list] = Run_Test(m,t)
 %function [ bench_data,Bench_Result,enc_data, actual_error_location] = Run_Test( m,t )
 %RUN_TEST Summary of this function goes here
 %   Detailed explanation goes here
@@ -27,13 +27,13 @@ corrupted_data = enc_data;
 %    end;
 %end;
 failed_list = 0;
-for Test_Num=1:Test_count,
+parfor Test_Num=1:Test_count,
 	tStart_i = tic;
 	fprintf('\rTest : %d \r',Test_Num);
-  corrupted_data_gf = gf(corrupted_data(:,Test_Num),m);
+    corrupted_data_gf = gf(corrupted_data(:,Test_Num),m);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Algorithm Calls   %%%%%%%%%%%%%%%%%%%%
-  Bench_Data = double(corrupted_data_gf.x); %double(Benchmark(corrupted_data_gf,m,t,n));
-  List_Sudan = double(Sudan(corrupted_data_gf,m,k));
+    Bench_Data = double(corrupted_data_gf.x); %double(Benchmark(corrupted_data_gf,m,t,n));
+    List_Sudan = double(Sudan(corrupted_data_gf,m,k));
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Data Charactistics  %%%%%%%%%%%%%%%%%% 
 	Buffer = zeros(size(Bench_Data,1),1);
 	if (size(List_Sudan,2) == 0),

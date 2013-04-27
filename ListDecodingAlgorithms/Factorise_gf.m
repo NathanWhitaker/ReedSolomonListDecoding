@@ -64,12 +64,8 @@ for i=1:size(pow_fact_loc,1),
 		new_factor = factors(:,I(1) - 1);
 		ori_factor = new_factor;
 	end;
-	if (power_fact(i) < 4), 
-        for j=1:power_fact(i)-1,
-            new_factor = Factor_mult(new_factor,ori_factor,m);
-        end;
-    else
-        new_factor = ori_factor;
+    for j=1:power_fact(i)-1,
+        new_factor = Factor_mult(new_factor,ori_factor,m);
+        factors = [factors new_factor];
     end;
-    factors = [factors new_factor];
 end

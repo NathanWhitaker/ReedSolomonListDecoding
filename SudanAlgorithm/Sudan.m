@@ -14,7 +14,13 @@ tStart = tic;
 % http://www.louisiana.edu/Academic/Sciences/MATH/stage/puremath2011.pdf
 x_limit     = m+l*d;
 y_limit     = l;
-polynomials = Q_Function_sudan(X,Y,m,k,x_limit,y_limit);
+x_mat = gf(zeros(n,x_limit+1),m);
+y_mat = gf(zeros(n,y_limit+1),m);
+for i=1:n,
+    x_mat(i,:) = gf(X(i),m) .^ (0:x_limit);
+    y_mat(i,:) = gf(Y(i),m) .^ (0:y_limit);
+end;
+polynomials = Q_Function_sudan(x_mat,Y,m,k,x_limit,y_limit);
 polynomials = polynomials(1:(x_limit+1)*(y_limit+1),:);
 polynomials = gf(unique(polynomials.x','rows')',m);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% Factor Polynomials %%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -31,15 +37,10 @@ factors = gf(unique(factors.x','rows')',m);
 %Remove Y factor
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% Evaluate Polynomials %%%%%%%%%%%%%%%%%%%%%%%%
 List = gf(zeros(n,1),m);
-factor_list = gf(zeros((x_limit+1)*(y_limit+1),1),m);
 for i=1:size(factors,2),
-    if(factors(4:x_limit,i) == 0),
-        [msg fact_msg] = Factor_Exhaust(Y,factors(:,i),m,k);
-        List = [List msg];
-        factor_list = [factor_list fact_msg];
-    end;
+    msg = Factor_Exhaust(x_mat,y_mat,factors(:,i),m,k);
+    List = [List msg];
 end;
-%factor_list
 %Remove initialisation value
 List = List(:,2:size(List,2));
 %Remove duplicate results
