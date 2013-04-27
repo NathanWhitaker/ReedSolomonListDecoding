@@ -14,7 +14,7 @@ end;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Data Generation  %%%%%%%%%%%%%%%%%%%%%
 enc_data = gf(zeros(n,Test_num),m);
 X_Coeff = gf(zeros(power+1,1),m);
-for i=1:Test_num,
+for i=73:Test_num,
 	test = i
 	for j=1:power+1,
 		X_Coeff(j) = mod(test,val);

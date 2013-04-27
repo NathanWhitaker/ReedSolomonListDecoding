@@ -18,7 +18,8 @@ for i=0:y_limit, %% Y Powers
     full_str = strcat(full_str, str);
 end
 poly_str = full_str(1:size(full_str,2)-1); %% Remove trailing "+"
-factor_param = sprintf('poly(%s, [Y, X], IntMod(%d))',poly_str,2^m-1); %% Add additional strings that are required
+base = str2double(char(feval(symengine,'nextprime',sprintf('%d',2^m))));
+factor_param = sprintf('poly(%s, [Y, X], IntMod(%d))',poly_str,base); %% Add additional strings that are required
 factor_sym = feval(symengine,'factor',factor_param);
 factor_str = char(factor_sym);
 
@@ -42,7 +43,7 @@ factor_count = min(size(start_fact_clean,2),size(end_fact,2));
 factors = gf(zeros((x_limit+1)*(y_limit+1),factor_count),m);
 
 for i=1:factor_count,
-    factors(:,i) = Str_to_Fact(factor_str(start_fact_clean(i)+5:end_fact(i)-1),m,x_limit,y_limit);
+    factors(:,i) = Str_to_Fact(factor_str(start_fact_clean(i)+5:end_fact(i)-1),m,x_limit,y_limit,base);
 end;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% Identify Repeated Factors %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
