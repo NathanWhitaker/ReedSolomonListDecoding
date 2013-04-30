@@ -27,7 +27,7 @@ corrupted_data = enc_data;
 %    end;
 %end;
 failed_list = 0;
-parfor Test_Num=1024:Test_count,
+parfor Test_Num=1:Test_count,
 	tStart_i = tic;
 	fprintf('\rTest : %d \r',Test_Num);
     corrupted_data_gf = gf(corrupted_data(:,Test_Num),m);
