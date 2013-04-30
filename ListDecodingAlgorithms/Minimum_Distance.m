@@ -1,6 +1,10 @@
 function [ min_distance ] = Minimum_Distance(List,Y)
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
+if(size(List,2) == 0),
+    min_distance = zeros(size(List,1),1);
+    return;
+end;
 distance = List(:,1) - Y;
 for i=2:size(List,2),
     distance = [distance List(:,i) - Y];
