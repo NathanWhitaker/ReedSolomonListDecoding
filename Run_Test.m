@@ -17,25 +17,27 @@ error_value = dlmread(sprintf('%s/Error_Value.txt',directory));
 Test_count = size(enc_data,2);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Iterative Testing  %%%%%%%%%%%%%%%%%%%%
 tStart = tic;
-
+Buffer = zeros(size(n,Test_count),1);
 Bench_Result = zeros(Test_count,1);
 bench_data = zeros(n,Test_count);
 corrupted_data = enc_data;
-%for Test_Num=1:Test_count,
-%    for i=1:error_count(Test_Num),
-%        corrupted_data(actual_error_location(i,Test_Num),Test_Num) = error_value(i,Test_Num);
-%    end;
-%end;
+for Test_Num=1:Test_count,
+    for i=1:error_count(Test_Num),
+        corrupted_data(actual_error_location(i,Test_Num),Test_Num) = error_value(i,Test_Num);
+        Buffer(actual_error_location(i,Test_Num),Test_Num) = 1;
+    end;
+end;
 failed_list = 0;
-parfor Test_Num=1:Test_count,
+parfor Test_Num=1:10,
 	tStart_i = tic;
 	fprintf('\rTest : %d \r',Test_Num);
     corrupted_data_gf = gf(corrupted_data(:,Test_Num),m);
+    enc_data_gf = gf(enc_data(:,Test_Num),m);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Algorithm Calls   %%%%%%%%%%%%%%%%%%%%
-    Bench_Data = double(corrupted_data_gf.x); %double(Benchmark(corrupted_data_gf,m,t,n));
+    Bench_Data = double(enc_data_gf.x); %double(Benchmark(corrupted_data_gf,m,t,n));
     List_Sudan = double(Sudan(corrupted_data_gf,m,k));
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Data Charactistics  %%%%%%%%%%%%%%%%%% 
-	Buffer = zeros(size(Bench_Data,1),1);
+	
 	if (size(List_Sudan,2) == 0),
 		fprintf('List Empty\r\n');
 		Bench_Data
@@ -45,7 +47,7 @@ parfor Test_Num=1:Test_count,
             failed_list = [failed_list Test_Num];
             fprintf('Incorrect Result\r\n');
         end;
-		[Bench_Data Buffer List_Sudan List_Sudan-Bench_Data]
+		[Bench_Data Buffer(:,Test_Num) List_Sudan List_Sudan-Bench_Data]
 	end;
 fprintf('Total Time : %d s\r\n',toc(tStart_i));
 end;

@@ -1,6 +1,7 @@
 function [ min_distance ] = Minimum_Distance(List,Y)
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
+List
 if(size(List,2) == 0),
     min_distance = zeros(size(List,1),1);
     return;
