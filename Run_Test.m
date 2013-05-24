@@ -21,21 +21,21 @@ Buffer = zeros(size(n,Test_count),1);
 Bench_Result = zeros(Test_count,1);
 bench_data = zeros(n,Test_count);
 corrupted_data = enc_data;
-for Test_Num=271:Test_count,
+for Test_Num=1:Test_count-1,
     for i=1:1,%min(error_count(Test_Num),1),
-        %corrupted_data(actual_error_location(i,Test_Num),Test_Num) = error_value(i,Test_Num);
+        corrupted_data(actual_error_location(i,Test_Num),Test_Num) = error_value(i,Test_Num);
         Buffer(actual_error_location(i,Test_Num),Test_Num) = 1;
     end;
 end;
 failed_list = 0;
-for Test_Num=512:Test_count-1,
-	tStart_i = tic;
-    fprintf('\rCountdown : %d \r',Test_count-Test_Num);
-	fprintf('\rTest : %d \r',Test_Num);
+completed = 1;
+parfor Test_Num=1:Test_count-1,
+		tStart_i = tic;
+		fprintf('\rTest : %d \r',Test_Num);
     corrupted_data_gf = gf(corrupted_data(:,Test_Num),m);
     enc_data_gf = gf(enc_data(:,Test_Num),m);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Algorithm Calls   %%%%%%%%%%%%%%%%%%%%
-    Bench_Data = double(corrupted_data_gf.x); %double(Benchmark(corrupted_data_gf,m,t,n));
+    Bench_Data = double(enc_data_gf.x); %double(Benchmark(corrupted_data_gf,m,t,n));
     List_Sudan = double(Sudan(enc_data_gf,m,k));
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Data Charactistics  %%%%%%%%%%%%%%%%%% 
 	
