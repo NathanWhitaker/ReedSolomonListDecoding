@@ -20,6 +20,8 @@ end;
 r=regexp(factor_str,'\x20\x2B\x20','split');  
 for i=1:size(r,2),
     coeff = cell2mat(r(i));
+    coeff = regexprep(coeff,'\x20','');
+    coeff = regexprep(coeff,'\x2B','');
     y_power = str2double(coeff(strfind(coeff,'Y^')+2));
     x_power = str2double(coeff(strfind(coeff,'X^')+2));
     if (isempty(strfind(coeff,'Y'))), %% If value doesnt contain Y, X Only
@@ -67,7 +69,12 @@ for i=1:size(r,2),
                     factor_vect(y_power * (x_limit + 1) + 1) = gf(value,m);
             end;
         else %% Contains both X and Y
-            value = str2double(strrep(coeff(1:strfind(coeff,'Y')-1),'*','')); %% Y variable precedees X
+            coefficient = strrep(coeff(1:strfind(coeff,'Y')-1),'*','');%% Y variable precedees X
+            if(isempty(coefficient)),
+                value = 1;
+            else
+                value = coefficient;
+            end;
             if(ismember(i,neg_coeff_loc)),
                value = base - value;
             end;

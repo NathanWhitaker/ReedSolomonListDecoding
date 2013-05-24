@@ -11,15 +11,16 @@ limit = (y_limit+1)*(x_limit+1);
 % Create matrices containing increasing powers of X and Y values
 final_mat = x_mat;
 sub_size = x_limit+1;
+X = x_mat(:,2);
 for i=1:y_limit,
     sel = Y.^i;
-    for j=2:x_limit,
-        sel = [sel x_mat(:,j).*(Y.^i)];
+    for j=1:x_limit-1-(k-1)*i,
+        sel = [sel X.^j.*(Y.^i)];
     end;
     % Removes coefficients that are beyond the m+(l-j)*d limit seen in sudan
     % definition of Q(X,Y)
     %sel = sel(:,1:max(x_limit+1-i*d,0));
-    sub_size = [sub_size; max(x_limit+1-i*(k-1),0)]; 
+    sub_size = [sub_size; max(x_limit-1-i*(k-1),0)]; 
     final_mat = [final_mat sel];
 end;
 cumulative_size = cumsum(sub_size);
@@ -27,12 +28,14 @@ cumulative_size = cumsum(sub_size);
 % the polynomial that solves this the nullspace/kernel is found of the matrix
 % Nullspace x of matrix A are the solutions to Ax=0
 fprintf('Rank : %d, %d\r\n',rank(final_mat),rank(final_mat'));
-List = gfnull(final_mat(1:rank(final_mat)-3,:),'r',m);
+List = gfnull(final_mat(1:rank(final_mat),:),'r',m);
 List_Full = gf(zeros(limit,size(List,2)),m);
 List_Full(1:x_limit+1,:) = List(1:x_limit+1,:);
 for i=1:y_limit,
     start = (x_limit+1)*i+1;
     List_Full(start:start+sub_size(i+1)-1,:) = List(cumulative_size(i)+1:cumulative_size(i+1),:);
 end;
-%List_Full = List;
+% ones = gf(zeros(limit,1),m);
+% ones(1) = 1;
+% List_Full = [ones List_Full];
 end

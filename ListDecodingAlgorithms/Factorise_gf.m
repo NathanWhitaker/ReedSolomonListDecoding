@@ -1,4 +1,4 @@
-function [ factors ] = Factorise_gf(poly,m,x_limit,y_limit )
+function [ factors ] = Factorise_gf(poly,m,k,x_limit,y_limit )
 %FACTORISE Summary of this function goes here
 %   Detailed explanation goes here
 % The factorisation of the polynomial is achieved through the use of the 
@@ -18,6 +18,9 @@ for i=0:y_limit, %% Y Powers
     full_str = strcat(full_str, str);
 end
 poly_str = full_str(1:size(full_str,2)-1); %% Remove trailing "+"
+if(isempty(poly_str)),
+    poly_str='0';
+end;
 base = str2double(char(feval(symengine,'nextprime',sprintf('%d',2^m))));
 factor_param = sprintf('poly(%s, [Y, X], IntMod(%d))',poly_str,base); %% Add additional strings that are required
 factor_sym = feval(symengine,'factor',factor_param);
@@ -44,7 +47,8 @@ if (size(start_fact,1) > 0),
     factors = gf(zeros((x_limit+1)*(y_limit+1),factor_count),m);
 
     for i=1:factor_count,
-        factors(:,i) = Str_to_Fact(factor_str(start_fact_clean(i)+5:end_fact(i)-1),m,x_limit,y_limit,base);
+        result = Str_to_Fact(factor_str(start_fact_clean(i)+5:end_fact(i)-1),m,x_limit,y_limit,base);
+        factors(:,i) = result(1:(x_limit+1)*(y_limit+1),1);
     end;
 else
     factors = gf(zeros((x_limit+1)*(y_limit+1),1),m);
@@ -73,3 +77,12 @@ for i=1:size(pow_fact_loc,1),
         factors = [factors new_factor];
     end;
 end
+
+clear_col = gf(zeros((x_limit+1)*(y_limit+1),1),m);
+for i=1:size(factors,2),
+    sub = factors(:,i);
+    sub = sub.x;
+    if(sum(abs(sub(k+1:x_limit+1))) ~= 0),
+        factors(:,i) = clear_col;
+    end;
+end;

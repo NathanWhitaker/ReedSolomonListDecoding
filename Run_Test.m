@@ -17,26 +17,26 @@ error_value = dlmread(sprintf('%s/Error_Value.txt',directory));
 Test_count = size(enc_data,2);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Iterative Testing  %%%%%%%%%%%%%%%%%%%%
 tStart = tic;
-Buffer = zeros(size(n,Test_count),1);
+Buffer = zeros(size(n,1),Test_count);
 Bench_Result = zeros(Test_count,1);
 bench_data = zeros(n,Test_count);
 corrupted_data = enc_data;
-for Test_Num=1:Test_count-1,
-    for i=1:1,%min(error_count(Test_Num),1),
+for Test_Num=1:Test_count,
+    for i=1:2,%min(error_count(Test_Num),1),
         corrupted_data(actual_error_location(i,Test_Num),Test_Num) = error_value(i,Test_Num);
         Buffer(actual_error_location(i,Test_Num),Test_Num) = 1;
     end;
 end;
+dec_data = zeros(k,Test_count);
 failed_list = 0;
-completed = 1;
-parfor Test_Num=1:Test_count-1,
-		tStart_i = tic;
-		fprintf('\rTest : %d \r',Test_Num);
+parfor Test_Num=1:256,
+	tStart_i = tic;
+	fprintf('\rTest : %d \r',Test_Num);
     corrupted_data_gf = gf(corrupted_data(:,Test_Num),m);
     enc_data_gf = gf(enc_data(:,Test_Num),m);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Algorithm Calls   %%%%%%%%%%%%%%%%%%%%
     Bench_Data = double(enc_data_gf.x); %double(Benchmark(corrupted_data_gf,m,t,n));
-    List_Sudan = double(Sudan(enc_data_gf,m,k));
+    [List_Sudan, Factor_Sudan] = Sudan(corrupted_data_gf,m,k);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Data Charactistics  %%%%%%%%%%%%%%%%%% 
 	
 	if (size(List_Sudan,2) == 0),
@@ -48,14 +48,18 @@ parfor Test_Num=1:Test_count-1,
         if(~isequal(List_Sudan,enc_data_gf.x)),
             failed_list = [failed_list Test_Num];
             fprintf('Incorrect Result\r\n');
+        else
+            fprintf('Factor\r\n');
+            Factor_Sudan(1:k)
         end;
     end;
-fprintf('Total Time : %d s\r\n',toc(tStart_i));
+    dec_data(:,Test_Count) = 1;%Factor_Sudan(1:k,1);
+    fprintf('Total Time : %d s\r\n',toc(tStart_i));
 end;
 fprintf('Total Time : %d s\r\n',toc(tStart));
 failed_list = failed_list(:,2:size(failed_list,2));
 dlmwrite(sprintf('failed.txt'),failed_list');
 %matlabpool close
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-end     
+end
         
