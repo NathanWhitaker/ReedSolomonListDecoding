@@ -1,13 +1,8 @@
-function [ List ] = Factor_Exhaust(x_mat,y_mat,factors,m,k)
+function [ List ] = Factor_Exhaust(x_mat,y_mat,factors,m,t,x_limit,y_limit)
 %SUDAN Summary of this function goes here
 %   Detailed explanation goes here
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% System Parameters %%%%%%%%%%%%%%%%%%%%%%%%%%%
 n = 2^m-1;
-d = k;%2^m -1 - 2*t;% k;
-t = floor((n-k)/2);
-l = ceil(sqrt(2*(n+1)/d)) - 1;
-x_limit     = m+l*d;
-y_limit     = l;
 List = gf(zeros(n,1),m);
 for j=1:n,
     [valid, msg] = Eval_Factor(x_mat,y_mat,factors*j,m,t,x_limit,y_limit);
