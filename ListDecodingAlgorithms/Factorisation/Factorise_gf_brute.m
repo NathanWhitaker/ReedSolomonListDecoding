@@ -40,6 +40,11 @@ for j=1:size(poly,2),
                 end;
                 factor = [factor factors_found];
                 [poly_div, r] = Euclid(poly_div,factor_product,m);
+                if(gf_poly_deg(poly_div,m) == 0),
+                    factor = [factor poly_div];
+                    irreducible = 1;
+                    break;
+                end;
             end;
         end;
     end;
