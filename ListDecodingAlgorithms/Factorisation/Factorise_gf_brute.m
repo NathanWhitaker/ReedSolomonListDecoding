@@ -7,6 +7,8 @@ factor = [];
 %    factor = [factor poly(:,:,i)];
 %end;        
 zers = gf(zeros(size(poly,1),1),m);
+one = zers;
+one(1) = 1;
 for j=1:size(poly,2),
     poly_div = poly(:,j);
     if(gf_poly_deg(poly_div,m) <= k),
@@ -16,7 +18,9 @@ for j=1:size(poly,2),
     if (isequal(poly_div,zers)),
         irreducible = 1;
     end;
-    while(~irreducible),            
+    while(~irreducible), 
+        factors_found = [];
+        factor_product = one;
         for i=0:n,
             x_powers = gf(i,m).^(0:size(poly_div,1)-1);
             eval = x_powers * poly_div;
@@ -24,16 +28,18 @@ for j=1:size(poly,2),
                 new_factor = zers;
                 new_factor(2) = 1;
                 new_factor(1) = i;
-                [poly_div, r] = Euclid(poly_div,new_factor,m);
-                factor = [factor new_factor]; %poly_div
-                if(gf_poly_deg(poly_div,m) <= k),
-                    factor = [factor poly_div];
-                end;
-                break;
+                factors_found = [factors_found new_factor];
+                factor_product = Factor_mult(factor_product,new_factor,m);
+                factor_product = factor_product(:,size(factor_product,2));
             end;
             if (i==n),
-                irreducible = 1;
-                factor = [factor poly_div];
+                if isempty(factors_found),
+                    irreducible = 1;
+                    factor = [factor poly_div];
+                    break;
+                end;
+                factor = [factor factors_found];
+                [poly_div, r] = Euclid(poly_div,factor_product,m);
             end;
         end;
     end;
