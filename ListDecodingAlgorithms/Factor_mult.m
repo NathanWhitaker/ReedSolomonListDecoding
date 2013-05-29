@@ -12,7 +12,7 @@ for i=1:size(factor_2),
 	if(factor_2(i) ~= 0),
 		extra_factor = circshift(factor_1,i-1);
 		extra_factor(1:i-1) = 0;
-		res_factor = res_factor.x + gf(extra_factor,m);
+		res_factor = res_factor.x + factor_2(i)*gf(extra_factor,m);
 	end;
 end;
 
