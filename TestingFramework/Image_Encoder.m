@@ -1,4 +1,4 @@
-function [Corrected_Data] = Image_Encoder(m,encoded_k,t,filename,error_count,decode_count)
+function [Corrupted_Data] = Image_Encoder(m,encoded_k,t,filename,error_count,decode_count)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  System Parameters  %%%%%%%%%%%%%%%%%%%%
 p = 2;   % Base Prime
 n = (p^m)-1; % Codeblock Size
