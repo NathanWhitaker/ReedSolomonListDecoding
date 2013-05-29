@@ -17,7 +17,7 @@ error_count = randi([0 t],[1 Test_Num]);
 error_location = randi([1 n],[t  Test_Num]);
 error_value = randi([1 n],[t Test_Num]);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Data Export  %%%%%%%%%%%%%%%%%%%%%%%%%
-directory = sprintf('./Data_m_%d_t_%d',m,t);
+directory = sprintf('./Data/Data_m_%d_t_%d',m,t);
 if ~exist(directory, 'dir')
   mkdir(directory);
 end

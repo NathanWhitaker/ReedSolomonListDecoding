@@ -67,7 +67,7 @@ filename = file_split{size(file_split,2)};
 file_split=regexp(filename,'\x2E','split'); %%Split by "."
 extension = file_split(2);
 file_split=regexprep(file_split(1),'\x20','_');
-directory = strcat(sprintf('./Data_m_%d_k_%d_t_%d_',m,k,t),file_split);
+directory = strcat(sprintf('./Data/Data_m_%d_k_%d_t_%d_',m,k,t),file_split);
 directory = directory{1}; %cell to string
 if ~exist(directory, 'dir')
   mkdir(directory);

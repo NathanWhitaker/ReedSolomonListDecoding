@@ -9,7 +9,7 @@ k = n - (2*t); % Message Width
 AddPath;
 %matlabpool('open','AttachedFiles','Run_Test.m')
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Test Data Retrieval %%%%%%%%%%%%%%%%%%
-directory = sprintf('./Data_m_%d_t_%d',m,t);
+directory = sprintf('./Data/Data_m_%d_t_%d',m,t);
 enc_data = dlmread(sprintf('%s/Encoded_Data.txt',directory));
 error_count = dlmread(sprintf('%s/Error_Count.txt',directory));
 actual_error_location = dlmread(sprintf('%s/Error_Location.txt',directory));
