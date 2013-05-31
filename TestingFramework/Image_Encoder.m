@@ -31,7 +31,9 @@ data_stream_upper = max(0,floor(double(data_stream)/(n+1)));
 factors = [data_stream_lower;data_stream_upper];
 Test_Num =size(data_stream,2);
 enc_data = gf(zeros(n,Test_Num),m);
+Test_Num
 for i=1:Test_Num,
+    i
     enc_data(:,i) = x_mat * factors(:,i);
 end;
 clear x_mat i
@@ -42,6 +44,7 @@ error_value = gf(randi([1 n],[error_count Test_Num]),m);
 Corrupted_Data = enc_data;
 Corrupted_Image_Data = gf(zeros(encoded_k,Test_Num),m);
 for i=1:Test_Num,
+    i
      for j=1:error_count,
          location = error_location(j,i);
          Corrupted_Data(location,i) = Corrupted_Data(location,i) + error_value(j,i);
