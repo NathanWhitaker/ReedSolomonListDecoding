@@ -1,15 +1,12 @@
 function [ List, Factor_List ] = Factor_Exhaust(x_mat,Y,factor,m,t)
-%SUDAN Summary of this function goes here
-%   Detailed explanation goes here
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% System Parameters %%%%%%%%%%%%%%%%%%%%%%%%%%%
 n = 2^m-1;
-List = [];
-Factor_List = [];
-for j=0:n,
-    [valid, msg] = Eval_Factor(x_mat,Y,j*factor,m,t);
-    if valid,   
-      List = [List msg];
-      Factor_List = [Factor_List factor*j];
-    end;
-end;
-end
+factor_mat = [diag(0:n);zeros(size(factor,1)-n-1,n+1)];
+Y_Concat = repmat(Y,[1 n+1]);
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Factor Evaluation %%%%%%%%%%%%%%%%%%%%%%%%%%%
+factors = repmat(factor,[1 size(factor,1)])*factor_mat;
+Factor_Mult = x_mat*factors;
+Intersection = find(sum((Factor_Mult + Y_Concat)==0)>=t);
+List = Factor_Mult(:,Intersection);
+Factor_List = factors(:,Intersection);
+ end
