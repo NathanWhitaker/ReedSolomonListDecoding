@@ -30,28 +30,22 @@ data_stream_lower = min(n,mod(data_stream,(n+1)));
 data_stream_upper = max(0,floor(double(data_stream)/(n+1)));
 factors = [data_stream_lower;data_stream_upper];
 Test_Num =size(data_stream,2);
-enc_data = gf(zeros(n,Test_Num),m);
-Test_Num
-for i=1:Test_Num,
-    i
-    enc_data(:,i) = x_mat * factors(:,i);
-end;
-clear x_mat i
+enc_data = x_mat * factors;
+clear x_mat
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Error Generation  %%%%%%%%%%%%%%%%%%%%
 error_location = randi([1 n],[error_count  Test_Num]);
 error_value = gf(randi([1 n],[error_count Test_Num]),m);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Data Corruption  %%%%%%%%%%%%%%%%%%%%%
-Corrupted_Data = enc_data;
+Corruption = gf(zeros(n,Test_Num),m);
+Corrupted_Data = gf(zeros(n,Test_Num),m);
 Corrupted_Image_Data = gf(zeros(encoded_k,Test_Num),m);
 for i=1:Test_Num,
-    i
-     for j=1:error_count,
-         location = error_location(j,i);
-         Corrupted_Data(location,i) = Corrupted_Data(location,i) + error_value(j,i);
-     end;
-    Corrupt_Index = Corrupted_Data.x;
-    Corrupted_Image_Data(:,i) = factor_reference(:,Corrupt_Index(1,i)+1,Corrupt_Index(2,i)+1);
-end; 
+   i
+   Corruption(error_location(:,i),i) = error_value(:,i);
+   Corrupted_Data(:,i) = enc_data(:,i) + Corruption(:,i);
+   Corrupted_Index = Corrupted_Data.x;
+   Corrupted_Image_Data(:,i) = factor_reference(:,Corrupted_Index(1,i)+1,Corrupted_Index(2,i)+1);
+end;
 clear i j Corrupt_Index factor_reference i j error_location error_value
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Corrupted Data Reconstruction %%%%%%%%
 Corrupted_Image_Data = Corrupted_Image_Data.x;
