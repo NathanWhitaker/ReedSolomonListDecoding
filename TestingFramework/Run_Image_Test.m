@@ -14,7 +14,7 @@ Test_count = size(Corrupted_Data,2);
 tStart = tic;
 dec_data = gf(zeros(encoded_k,Test_count),m);
 i=0;
-parfor Test_Num=269:Test_count,
+parfor Test_Num=1:Test_count,
     tStart_i = tic;
     fprintf('\rTest : %d \r',Test_Num);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Algorithm Calls   %%%%%%%%%%%%%%%%%%%%
