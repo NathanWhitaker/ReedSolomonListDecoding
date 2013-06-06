@@ -1,6 +1,5 @@
 function [ factors ] = SFF(f,m)
-%SFF Summary of this function goes here
-%   Detailed explanation goes here
+%% If degree of polynomial is zero, ie constant then return polynomial
 if (gf_poly_deg(f,m) == 0),
     factors = f;
     return;
@@ -36,38 +35,4 @@ factors = f;
 for i=1:size(factors,2),
     factors(:,i) = factors(:,i)/gf_poly_lc(factors(:,i),m);
 end;
-
-% i=1;
-% p=2;
-% g = gf_poly_diff(f,m);
-% zers = gf(zeros(size(f,1),1),m);
-% one = zers;
-% one(1) = 1;
-% R = one;
-% if(~isequal(g,zers)),
-%     c = GCD(f,g,m)
-%     [w,r] = Euclid(f,c,m)
-%     while (~isequal(w,one)),
-%         y = GCD(w,c,m)
-%         [z,r] = Euclid(w,y,m)
-%         R = Factor_mult(R,z.^i,m)
-%         R = R(:,size(R,2))
-%         i = i + 1
-%         w = y
-%         [c,r] = Euclid(c,y,m)
-%     end;
-%     if (~isequal(c,zers)),
-%         c = c.^(1/p);
-%         factors = (R*(SFF(c,m)^p));
-%     else
-%         factors = R;
-%     end;
-% else
-%     f = f.^(1/p);
-%     factors = SFF(f,m).^p;
-% end;
-
-
-
 end
-

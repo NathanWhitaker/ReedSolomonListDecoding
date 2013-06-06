@@ -70,7 +70,7 @@ if ~exist(directory, 'dir')
   mkdir(directory);
 end
 imwrite(Original_Image,strcat(sprintf('%s/',directory),file_split{1},'_original','.',extension{1}));
-imwrite(Corrupted_Image,strcat(sprintf('%s/',directory),file_split{1},'_corrupted','.',extension{1}));
+imwrite(Corrupted_Image,strcat(sprintf('%s/',directory),file_split{1},'_corrupted_',sprintf('%d',error_count),'_errors','.',extension{1}));
 dlmwrite(sprintf('%s/Corrupted_Data.txt',directory), Corrupted_Data.x);
 dlmwrite(sprintf('%s/Dimensions.txt',directory), dimensions);
 

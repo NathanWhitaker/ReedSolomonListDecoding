@@ -1,6 +1,4 @@
 function [ factors ] = Factorise_gf(poly,m,k,x_limit,y_limit )
-%FACTORISE Summary of this function goes here
-%   Detailed explanation goes here
 % The factorisation of the polynomial is achieved through the use of the 
 % factorisation function that is contained within MuPad. This is used by
 % passing the polynomial as a string to this function which is used inline

@@ -21,7 +21,7 @@ for i=1:n,
     x_mat(i,:) = gf(X(i),m) .^ (0:x_limit);
     y_mat(i,:) = gf(Y(i),m) .^ (0:y_limit);
 end;
-polynomials = sudan_q_2(x_mat,y_mat,l,x_limit,m,d ); %Q_Function_sudan(x_mat,y_mat,m,d,k,x_limit,y_limit);
+polynomials = Q_Function_sudan(x_mat,y_mat,l,x_limit,m,d ); %Q_Function_sudan(x_mat,y_mat,m,d,k,x_limit,y_limit);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% Factor Polynomials %%%%%%%%%%%%%%%%%%%%%%%%%%
 %Polynomial that is found is then factorised
 one = gf(zeros(size(polynomials,1),1),m);

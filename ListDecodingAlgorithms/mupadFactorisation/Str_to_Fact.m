@@ -1,5 +1,4 @@
 function [ factor_vect ] = Str_to_Fact( factor_str,m,x_limit,y_limit,base)
-%STR_TO_FACT Summary of this function goes here
 %   This is passed the string of a factor and this converts it into a
 %   coefficient matrix in X and Y
 n = 2^m-1;
@@ -69,7 +68,8 @@ for i=1:size(r,2),
                     factor_vect(y_power * (x_limit + 1) + 1) = gf(value,m);
             end;
         else %% Contains both X and Y
-            coefficient = strrep(coeff(1:strfind(coeff,'Y')-1),'*','');%% Y variable precedees X
+			%% Y variable precedes X
+            coefficient = strrep(coeff(1:strfind(coeff,'Y')-1),'*','');
             if(isempty(coefficient)),
                 value = 1;
             else

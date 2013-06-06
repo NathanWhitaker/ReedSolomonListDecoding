@@ -1,4 +1,4 @@
-function [Corrected_Image] = Image_Reconstruction(m,t,encoded_k,filename,Corrected_Image_Data)
+function [Corrected_Image] = Image_Reconstruction(m,t,encoded_k,filename,Corrected_Image_Data,errors)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  System Parameters  %%%%%%%%%%%%%%%%%%%%
 p = 2;   % Base Prime
 n = p^m-1;
@@ -19,5 +19,5 @@ Corrected_Image_Data = Corrected_Image_Data.x;
 Corrected_Image = Corrected_Image_Data(1,:) + (n+1)*Corrected_Image_Data(2,:);
 Corrected_Image = uint8(reshape(Corrected_Image,dimensions));
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Data Encoding     %%%%%%%%%%%%%%%%%%%%%
-imwrite(Corrected_Image,strcat(sprintf('%s/',directory),file_split{1},'_reconstucted','.',extension{1}));
+imwrite(Corrected_Image,strcat(sprintf('%s/',directory),file_split{1},'_reconstucted_',sprintf('%d',errors),'_errors','.',extension{1}));
 end

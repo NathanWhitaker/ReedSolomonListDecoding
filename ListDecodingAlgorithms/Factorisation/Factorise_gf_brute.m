@@ -1,14 +1,10 @@
 function [ factor ] = Factorise_gf_brute( poly,m,k)
-%FACTORISE_GF_BRUTE Summary of this function goes here
-%   Detailed explanation goes here
 n = 2^m-1;
-factor = [];
-%for i=1:size(poly,3),
-%    factor = [factor poly(:,:,i)];
-%end;        
+factor = [];      
 zers = gf(zeros(size(poly,1),1),m);
 one = zers;
 one(1) = 1;
+%% For each polynomial that is passed in
 for j=1:size(poly,2),
     poly_div = poly(:,j);
     if(gf_poly_deg(poly_div,m) <= k),
@@ -21,9 +17,11 @@ for j=1:size(poly,2),
     while(~irreducible), 
         factors_found = [];
         factor_product = one;
+		%% Evaluate polynomial at every point in finite field
         for i=0:n,
             x_powers = gf(i,m).^(0:size(poly_div,1)-1);
             eval = x_powers * poly_div;
+			%% If zero then factor found and appended to factor list
             if (eval == 0),
                 new_factor = zers;
                 new_factor(2) = 1;
@@ -39,6 +37,7 @@ for j=1:size(poly,2),
                     break;
                 end;
                 factor = [factor factors_found];
+				%% Divide polynomial by factors that have been identified in the most recent pass
                 [poly_div, r] = Euclid(poly_div,factor_product,m);
                 if(gf_poly_deg(poly_div,m) == 0),
                     factor = [factor poly_div];
@@ -49,6 +48,5 @@ for j=1:size(poly,2),
         end;
     end;
 end;
-
 end
 

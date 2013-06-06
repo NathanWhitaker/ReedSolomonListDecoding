@@ -1,4 +1,4 @@
-function [dec_data] = Run_Image_Test(m,t,encoded_k,filename,Corrupted_Data)
+function [dec_data] = Run_Image_Test(m,t,encoded_k,Corrupted_Data)
 %function [ bench_data,Bench_Result,enc_data, actual_error_location] = Run_Test( m,t )
 %RUN_TEST Summary of this function goes here
 %   Detailed explanation goes here
@@ -38,7 +38,6 @@ parfor Test_Num=269:Test_count,
 end;
 i
 fprintf('Total Time : %d s\r\n',toc(tStart));
-Image_Reconstruction(m,t,encoded_k,filename,dec_data);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 end
         

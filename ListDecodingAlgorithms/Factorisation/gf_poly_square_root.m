@@ -1,6 +1,5 @@
 function [ factors ] = gf_poly_square_root( poly,m )
-%GF_POLY_SQUARE_ROOT Summary of this function goes here
-%   Detailed explanation goes here
+%% Recursively un-squares polynomials, and when normalises to unit leading coefficient
 coeff_new = gf_poly_coeff_root(poly,m);
 factors = gf(zeros(size(poly,1),1),m);
 for(i=0:floor(size(poly,1)/2)-1),
