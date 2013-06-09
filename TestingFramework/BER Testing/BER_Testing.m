@@ -42,7 +42,7 @@ for i=1:size(BER,2),
     BER_Probability(1,i) = 1 - double((sum(sum((Decoded_Data_Std(1:k,:)   + enc_data(1:k,:) )==0)~=0))/Test_Num);
     BER_Probability(2,i) = 1 - double((sum(sum((Decoded_Data_Sudan(1:k,:) + enc_data(1:k,:) )==0)~=0))/Test_Num);
 end;
-dlmwrite('BER_Result.txt', [BER_Probability' BER'],'precision','%1.10f');
+dlmwrite('BER_Result.txt', [BER_Probability' BER'],'precision','%1.10f','-append');
 matlabpool close;
 end
 
