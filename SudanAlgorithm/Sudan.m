@@ -1,4 +1,4 @@
-function [ Min_Value, Min_Factor ] = Sudan(Y,m,k)
+function [ Min_List, Min_Factor ] = Sudan(Y,m,k)
 %SUDAN Summary of this function goes here
 %   Detailed explanation goes here
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% System Parameters %%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -50,5 +50,5 @@ for i=1:size(Factor_List,2),
     end;
 end;
 fprintf('Sudan Time : %d s\r\n',toc(tStart));
-[Min_Value, Min_Factor] = Minimum_Distance(List_Degree,Factor_List_Degree,Y);
+[Min_List, Min_Factor] = Minimum_Distance(List_Degree,Factor_List_Degree,Y);
 end

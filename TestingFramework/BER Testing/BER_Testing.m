@@ -16,14 +16,18 @@ clear X x_col i
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Data Generation  %%%%%%%%%%%%%%%%%%%%%
 factors = gf(randi([0 n-1], enc_k,Test_Num),m); % Generate Message Data
 enc_data = x_mat * factors;
-BER_Probability = zeros(2,size(BER,2));
+BER_Probability = zeros(2,1);
 for i=1:size(BER,2),
-    Bit_Error_Count = round(BER(i)*Test_Num*n*m);
+    i
+		Bit_Error_Count = round(BER(i)*Test_Num*n*m);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Error Generation  %%%%%%%%%%%%%%%%%%%%
     Corruption = reshape(gf(zeros(n,Test_Num),m),1,[]);
-    All_Locations = randperm(Test_Num*n*m)-1;
-    Error_Values = gf(2.^(mod(All_Locations(1:Bit_Error_Count),m)),m);
-    Error_Locations = floor(All_Locations(1:Bit_Error_Count)/m);
+    All_Locations = randperm(Test_Num*n*m,Bit_Error_Count)-1;
+		if  (isempty(All_Locations)),
+			break;
+		end;
+    Error_Values = gf(2.^(mod(All_Locations,m)),m);
+    Error_Locations = floor(All_Locations/m);
     for j=1:Bit_Error_Count
         j
         Corruption(Error_Locations(j)+1) = Corruption(Error_Locations(j)+1) + Error_Values(j);
@@ -39,10 +43,10 @@ for i=1:size(BER,2),
     end;
     Decoded_Data_Sudan = Run_Test_BER(m,t,Corrupted_Data);
     
-    BER_Probability(1,i) = 1 - double((sum(sum((Decoded_Data_Std(1:k,:)   + enc_data(1:k,:) )==0)~=0))/Test_Num);
-    BER_Probability(2,i) = 1 - double((sum(sum((Decoded_Data_Sudan(1:k,:) + enc_data(1:k,:) )==0)~=0))/Test_Num);
+    BER_Probability(1) = 1 - double((sum(sum((Decoded_Data_Std(1:k,:)   + enc_data(1:k,:) )==0)~=0))/Test_Num);
+    BER_Probability(2) = 1 - double((sum(sum((Decoded_Data_Sudan(1:k,:) + enc_data(1:k,:) )==0)~=0))/Test_Num);
+		dlmwrite('BER_Result.txt', [BER_Probability' BER(i)'],'precision','%1.10f','-append');
 end;
-dlmwrite('BER_Result.txt', [BER_Probability' BER'],'precision','%1.10f','-append');
 matlabpool close;
 end
 
