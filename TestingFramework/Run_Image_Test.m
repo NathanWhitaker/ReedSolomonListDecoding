@@ -25,9 +25,6 @@ parfor Test_Num=1:Test_count,
         fprintf('List Empty\r\n');
     else
         try
-            factor_int = Factor_Sudan(1:encoded_k);
-            factor_int = factor_int.x;
-            fprintf('Factor %s\r\n',factor_int);
             dec_data(:,Test_Num) = List_Sudan(1:encoded_k);
         catch
             i = [i Test_Num];

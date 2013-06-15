@@ -4,7 +4,7 @@ function [ min_distance,min_fact ] = Minimum_Distance(List,Factor_List,Y)
 List;
 if(size(List,2) == 0),
     min_distance = Y;
-    min_fact = zeros(size(Factor_List,1),1);
+    min_fact = zeros(size(Y,1),1);
     return;
 end;
 distance = List(:,1) - Y;
