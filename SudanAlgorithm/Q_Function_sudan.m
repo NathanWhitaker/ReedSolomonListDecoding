@@ -1,6 +1,4 @@
 function [ list_full ] = Q_Function_sudan( x_mat,y_mat,l,x_limit,m,d )
-%SUDAN_Q_2 Summary of this function goes here
-%   Detailed explanation goes here
 f_mat = [];
 for i=0:l,
     x_select_limit = x_limit-(d)*i;

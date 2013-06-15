@@ -41,6 +41,7 @@ for i=1:size(factors,2),
     List = [List msg];
     Factor_List = [Factor_List factor];
 end;
+Factor_List
 List_Degree = [];
 Factor_List_Degree = [];
 for i=1:size(Factor_List,2),

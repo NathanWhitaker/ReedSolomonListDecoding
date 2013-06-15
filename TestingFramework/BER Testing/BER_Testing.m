@@ -15,7 +15,7 @@ end;
 clear X x_col i
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Data Generation  %%%%%%%%%%%%%%%%%%%%%
 factors = gf(randi([0 n-1], enc_k,Test_Num),m); % Generate Message Data
-enc_data = x_mat * factors;
+enc_data = gf(zeros(n,Test_Num));%x_mat * factors;
 BER_Probability = zeros(2,1);
 for i=1:size(BER,2),
     i

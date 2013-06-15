@@ -9,4 +9,4 @@ Factor_Mult = x_mat*factors;
 Intersection = find(sum((Factor_Mult + Y_Concat)==0)>=t);
 List = Factor_Mult(:,Intersection);
 Factor_List = factors(:,Intersection);
- end
+end
