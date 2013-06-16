@@ -1,10 +1,9 @@
-function [ unique_factors ] = MyAlgorithm(m,t,data,inv_factors,comb)
+function [ factor,List ] = MyAlgorithm(m,t,data,inv_factors,comb,x_mat)
 %MYALGORITHM Summary of this function goes here
 %   Detailed explanation goes here
 tStart = tic;
 n = 2^m-1;
 k = n-2*t;
-comb = nchoosek(1:n,k);
 factors = [];
 for i=1:size(comb,1),
     Data_Sel = [];
@@ -15,6 +14,18 @@ for i=1:size(comb,1),
 end;
 factors = factors.x;
 unique_factors = unique(factors','rows')';
+List = [];
+min_distance = n-t;
+for i=1:size(unique_factors,2),
+    fact_list = x_mat * unique_factors(:,i);
+    if (unique_factors(3,i) ==0),
+        if(sum((fact_list-data)~=0) < min_distance),
+            List = fact_list;
+            factor = unique_factors(:,i);
+            min_distance = sum((fact_list-data)~=0);
+        end;
+    end;
+end;
 fprintf('Total Time : %d s\r\n',toc(tStart));
 end
 

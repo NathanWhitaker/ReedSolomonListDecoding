@@ -1,4 +1,4 @@
-function [ inv_factors ] = InvGen(m,t)
+function [inv_factors,x_mat,comb] = InvGen(m,t)
 %INVGEN Summary of this function goes here
 %   Detailed explanation goes here
 n = 2^m-1;
@@ -20,6 +20,5 @@ for i=1:size(comb,1),
     end;
     inv_factors(:,:,i) = inv(fact);
 end;
-
 end
 
