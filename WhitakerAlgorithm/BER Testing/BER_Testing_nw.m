@@ -1,5 +1,5 @@
 function [BER_Probability] = BER_Testing_nw( m,t,enc_k,Number_of_Tests,BER )
-%matlabpool open
+matlabpool open
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  System Parameters  %%%%%%%%%%%%%%%%%%%%
 p = 2;   % Base Prime
 n = (p^m)-1; % Codeblock Size

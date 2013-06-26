@@ -1,1 +1,1 @@
-addpath(genpath('./ListDecodingAlgorithms'),genpath('./SudanAlgorithm'),genpath('./ExternalFunctions'),genpath('./TestingFramework'));
+addpath(genpath('./ListDecodingAlgorithms'),genpath('./WhitakerAlgorithm'),genpath('./SudanAlgorithm'),genpath('./ExternalFunctions'),genpath('./TestingFramework'));
